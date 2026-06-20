@@ -31,13 +31,13 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
+Instead of a screenshot, here is a textual walkthrough that steps through a sample game in order. (Difficulty: **Normal** — range 1–50, 8 attempts. For this run the secret number is **37**, visible in the "Developer Debug Info" expander.)
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. The app loads on Normal difficulty and shows the prompt: *"Guess a number between 1 and 50. Attempts left: 8."* The secret (37) stays fixed across clicks instead of resetting on every Submit.
+2. User enters a guess of **20** and clicks "Submit Guess 🚀" → game returns the hint **"📈 Go HIGHER!"** (20 is below 37). Attempts left drops to 7, and the hint stays on screen instead of vanishing on the next rerun.
+3. User enters **45** → game returns **"📉 Go LOWER!"** (45 is above 37). Attempts left drops to 6. The history in Debug Info now reads `[20, 45]`.
+4. User enters **abc** (invalid) → game shows *"That is not a number."* and **does not** burn an attempt — attempts left stays at 6. An out-of-range guess like **75** is likewise rejected with *"Enter a number between 1 and 50."*
+5. User enters **37** → game shows balloons 🎈 and *"You won! The secret was 37."* The score updates correctly after each guess, the status switches to **won**, and Submit is locked until "New Game 🔁" resets the secret, attempts, score, and history for a fresh round.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
