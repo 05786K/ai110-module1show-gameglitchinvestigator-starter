@@ -153,5 +153,51 @@ class TestCorrectAttempts:
         assert update_score(50, "Pending", attempt_number=2) == 50
 
 
+# ---------------------------------------------------------------------------
+# 5. Edge cases that could crash the app
+# ---------------------------------------------------------------------------
+class TestEdgeCases:
+    @pytest.mark.parametrize("raw", ["-5", "-1", "-100", "-3.9"])
+    def test_negative_numbers_are_rejected(self, raw):
+        # Negatives parse fine as ints/floats but fall below every difficulty's
+        # lower bound, so they must be rejected as out of range, not accepted.
+        ok, value, err = parse_guess(raw, 1, 20)
+        assert ok is False
+        assert value is None
+        assert err == "Enter a number between 1 and 20."
+
+    def test_extremely_large_number_does_not_crash(self):
+        # A huge string of digits would overflow a fixed-width int in many
+        # languages. Python handles big ints, so this must reject gracefully
+        # (out of range) rather than raise. Also confirm it parses when no
+        # range bounds are supplied.
+        big = "9" * 30
+        ok, value, err = parse_guess(big, 1, 100)
+        assert ok is False
+        assert err == "Enter a number between 1 and 100."
+
+        ok, value, err = parse_guess(big, None, None)
+        assert ok is True
+        assert value == int(big)
+
+    @pytest.mark.parametrize(
+        "raw, expected_err",
+        [
+            (".5", "Enter a number between 1 and 20."),  # float() ok -> int 0, out of range
+            ("1e2", "That is not a number."),            # scientific notation, no "." -> int() raises
+            ("inf", "That is not a number."),            # float infinity, no "." -> int() raises
+            ("nan", "That is not a number."),            # float NaN, no "." -> int() raises
+        ],
+    )
+    def test_tricky_decimal_and_special_floats(self, raw, expected_err):
+        # These look numeric but must never crash check_guess downstream:
+        # ".5" truncates to 0 (out of range); "1e2"/"inf"/"nan" are refused
+        # outright because they contain no "." and int() rejects them.
+        ok, value, err = parse_guess(raw, 1, 20)
+        assert ok is False
+        assert value is None
+        assert err == expected_err
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

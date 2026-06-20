@@ -2,6 +2,20 @@
 
 > **Stretch features only.** Only fill in the sections that apply to stretch features you attempted. If you did not attempt a stretch feature, leave its section blank or delete it. This file is not required for the core project.
 
+
+Challenge 1: Advanced Edge-Case Testing
+**AI Prompt:**
+
+> In the `test/test_game_logic.py` file, write three test cases that cover edge cases such as negative numbers, decimal values, extremely large numbers, or other potential risks that could cause the application to crash or behave unexpectedly.
+
+    1. **Negative numbers** – Ensure values below the allowed range are rejected instead of being treated as valid guesses.
+
+    2. **Extremely large numbers** – Confirm that very large out-of-range values are handled safely without errors.
+
+    3. **Special numeric values** (`.5`, `1e2`, `inf`, `nan`) – Verify that non-integer, infinite, and undefined values are rejected before reaching the game logic.
+
+    
+
 ---
 
 ## Agent Workflow (SF8)
