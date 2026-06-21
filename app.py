@@ -33,6 +33,22 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
+# FIXED: the secret was generated once and never regenerated when the difficulty
+# changed, so switching (e.g.) Normal -> Easy left a secret outside the new
+# range -- and since out-of-range guesses are rejected, the game was unwinnable.
+# Detect a difficulty change and reset the round for the new range.
+if "difficulty" not in st.session_state:
+    st.session_state.difficulty = difficulty
+
+if st.session_state.difficulty != difficulty:
+    st.session_state.difficulty = difficulty
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.attempts = 0
+    st.session_state.score = 0
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.last_hint = None
+
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 

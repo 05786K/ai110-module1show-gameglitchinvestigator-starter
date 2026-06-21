@@ -22,10 +22,10 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-|   20  | "Go Higher" hint      Go Lower           Hints were backwards
-|   60  | "Go Lower"            Go Higher          Hints were backwards
-|   45  |  Go Higher            NO HINTS           No Hints were given
-|   55  | Correct Guess         Correct            Correct/Game won
+|   20  | "Go Higher" hint  |   Go Lower      |   Hints were backwards |
+|   60  | "Go Lower"        |   Go Higher     |   Hints were backwards |
+|   45  |  Go Higher        |   NO HINTS      |   No Hints were given  |
+|   55  | Correct Guess     |   Correct       |   Correct/Game won     |
 ---
 
 ## 2. How did you use AI as a teammate?
